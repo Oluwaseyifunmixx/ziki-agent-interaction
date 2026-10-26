@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ziki today: the agents view (reconstruction)</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .ann { display: flex; gap: 6px; align-items: flex-start; }
+  table.cur { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--zk-surface); border: 1px solid var(--zk-border); border-radius: 12px; overflow: hidden; }
+  table.cur th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--zk-accent); background: color-mix(in srgb, var(--zk-tint) 70%, transparent); padding: 10px 12px; }
+  table.cur td { padding: 11px 12px; border-top: 1px solid var(--zk-divider); vertical-align: middle; }
+  .dot-s { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .d-work { background: var(--zk-warn-fg); } .d-wait { background: var(--zk-info-fg); } .d-idle { background: var(--zk-ok-fg); } .d-off { background: var(--zk-muted); }
+  .stage { display: grid; grid-template-columns: 1fr 280px; gap: 18px; align-items: start; }
+  @media (max-width: 960px) { .stage { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="mock-banner"><strong>RECONSTRUCTION</strong> · Today's Ziki, redrawn from the source code and the live site · Illustrative data · Not connected to Ziki</div>
+
+<header class="appbar">
+  <div class="appbar-in">
+    <a class="logo" href="dashboard.html" aria-label="ziki"><i></i>ziki</a>
+    <span class="ws">Zedu</span>
+    <nav class="nav" aria-label="Areas"><span>Product</span><span>Marketing</span><span>Security</span></nav>
+    <div class="spacer"></div>
+    <span class="chip-btn" aria-hidden="true">Agents &#9662;</span>
+    <span class="pts" aria-hidden="true">0 pts</span>
+    <span class="chip-btn bell" aria-hidden="true">&#128276;<span class="n">23</span></span>
+    <span class="avatar" aria-hidden="true">AS</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="page-head">
+    <div>
+      <h1>Your agents <span class="chip ill">today</span></h1>
+      <p>Same five illustrative agents as the proposal, shown the way Ziki's current dashboard, header and bell would present them. <a href="dashboard.html">Go to the proposed version</a> or see the <a href="compare.html">side-by-side comparison</a>.</p>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div>
+      <h3 style="margin:6px 0 8px">The dashboard "Your agents" table</h3>
+      <table class="cur">
+        <thead><tr><th>Agent</th><th>Status</th><th>Current activity</th><th style="text-align:right">Last seen</th></tr></thead>
+        <tbody>
+          <tr><td><b>Kite</b></td><td><span class="dot-s d-wait"></span>Waiting on you</td><td>Waiting for your answer <span class="callout" title="Problem 4">4</span> <span class="callout" title="Problem 7">7</span></td><td style="text-align:right">41 min ago</td></tr>
+          <tr><td><b>Harbor</b></td><td><span class="dot-s d-work"></span>Working</td><td>Working on #421 Password reset email links to the wrong page <span class="callout" title="Problem 3">3</span></td><td style="text-align:right">12 min ago</td></tr>
+          <tr><td><b>Ada's Claude</b></td><td><span class="dot-s d-work"></span>Working</td><td>Working on #412 Search results show sample data&hellip; <span class="callout" title="Problem 2">2</span></td><td style="text-align:right">4 min ago</td></tr>
+          <tr><td><b>Lark</b></td><td><span class="dot-s d-off"></span>Offline</td><td>No recent activity <span class="callout" title="Problem 5">5</span></td><td style="text-align:right">4 h ago</td></tr>
+          <tr><td><b>Orca</b></td><td><span class="dot-s d-idle"></span>Idle</td><td>Standing by <span class="callout" title="Problem 6">6</span></td><td style="text-align:right">2 h ago</td></tr>
+        </tbody>
+      </table>
+      <p style="color:var(--zk-muted);font-size:12.5px;margin-top:8px">Status rule in the code: waiting = an unanswered agent question; working = an active claim with a recent heartbeat; idle = seen recently; otherwise offline.</p>
+
+      <h3 style="margin:22px 0 8px">The bell (notifications)</h3>
+      <div class="panel">
+        <div class="notif unread">Bolu Triager commented on &ldquo;Desktop Billing settings: inconsistent spelling&hellip;&rdquo; <div class="when">1:02 AM</div></div>
+        <div class="notif unread">Personal agent commented on &ldquo;Mobile welcome screen: large empty gaps&hellip;&rdquo; <div class="when">Yesterday 9:41 PM</div></div>
+        <div class="notif unread">Bolu Reviewer commented on &ldquo;Workspace name is cut off in the navbar&hellip;&rdquo; <div class="when">Yesterday 9:40 PM</div></div>
+        <div class="notif unread key"><span class="callout" title="Problem 1">1</span> Kite is asking you a question on &ldquo;Channel directory loses matches&hellip;&rdquo; <div class="when">Yesterday 9:12 PM &middot; looks like every other line</div></div>
+        <div class="notif unread">Bolu Triager commented on &ldquo;Zedu Web: Billing page text reads&hellip;&rdquo; <div class="when">Yesterday 9:39 PM</div></div>
+        <div class="notif">&hellip; and 18 more, in the same format</div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="margin:6px 0 8px"><span class="callout" title="Problem 1">1</span>Where "Escalations" lives</h3>
+      <div class="menu-mock" aria-label="The account menu, opened">
+        <div>Profile</div>
+        <div>Theme: System / Light / Dark</div>
+        <div class="hl"><span>Escalations</span><span class="chip bad">1</span></div>
+        <div>Settings</div>
+        <div>Documentation</div>
+        <div>Report issue</div>
+      </div>
+      <p style="color:var(--zk-muted);font-size:12.5px;margin-top:8px">The badge only appears after you open the account menu. It counts questions only (here: 1, Kite's). It does not count the redesign proposal or the project-rule approval.</p>
+    </div>
+  </div>
+
+  <h2 style="margin:30px 0 4px;font-size:20px">What a user has to do today, and why it's hard</h2>
+  <ul class="pain-list">
+    <li><span class="callout">1</span><span><b>Nothing in the top bar says you are needed.</b> The Escalations link and its badge sit inside the account menu, and the bell mixes an agent's question in with &ldquo;commented on&rdquo; lines, with no filter. <span class="tag v">Live</span> (23 to 25 unread, nearly all comments)</span></li>
+    <li><span class="callout">2</span><span><b>The pending count leaves things out.</b> It counts only agent questions, not redesign proposals or project-rule approvals. <span class="tag v">Code</span></span></li>
+    <li><span class="callout">3</span><span><b>A blocked agent can look like it's working.</b> The status rule counts only questions, so an agent stuck on a project-rule approval still reads &ldquo;Working&rdquo;. <span class="tag v">Code</span> <span class="tag a">Assumption: how often this happens</span></span></li>
+    <li><span class="callout">4</span><span><b>&ldquo;Waiting on you&rdquo; isn't actionable.</b> No link and no preview of the question on the dashboard row; you go to Escalations by hand. <span class="tag v">Code</span></span></li>
+    <li><span class="callout">5</span><span><b>A stopped agent shows &ldquo;Offline&rdquo;, with no reason.</b> Ziki records why a claim was released (silence, a missed deadline, or waiting too long on the owner), but the dashboard doesn't show it, and I found no notification telling the owner. <span class="tag v">Code</span></span></li>
+    <li><span class="callout">6</span><span><b>A finished agent looks like an idle one.</b> &ldquo;Standing by&rdquo; says nothing about what it delivered. Finished work is only visible in the audit log, which is empty for my own agent on the live site (cause unknown). <span class="tag v">Code</span> <span class="tag v">Live</span></span></li>
+    <li><span class="callout">7</span><span><b>You can't see how long you have.</b> One reminder after 30 min; after a default 4-hour wait the agent releases the issue. <span class="tag v">Code</span></span></li>
+  </ul>
+
+  <div class="mock-foot">
+    <span>Reconstruction &middot; illustrative data only.</span>
+    <a href="proposal.html">About this proposal</a>
+    <a href="dashboard.html">See the proposed version</a>
+  </div>
+</main>
+</body>
+</html>

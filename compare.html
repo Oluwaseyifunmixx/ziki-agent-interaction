@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Before and after · Agent attention prototype</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="mock-banner"><strong>STATIC PROTOTYPE</strong> · Illustrative data only · Not connected to Ziki · Left side redrawn from Ziki's code and live site</div>
+
+<header class="appbar">
+  <div class="appbar-in">
+    <a class="logo" href="dashboard.html" aria-label="ziki (prototype home)"><i></i>ziki</a>
+    <span class="ws">Zedu</span>
+    <div class="spacer"></div>
+    <a class="chip-btn" href="dashboard.html" style="text-decoration:none">Open the interactive prototype</a>
+    <a class="chip-btn" href="proposal.html" style="text-decoration:none">About this proposal</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="page-head">
+    <div>
+      <h1>Before and after</h1>
+      <p>The same five agents on the same morning. <b>Left:</b> how Ziki shows them today. <b>Right:</b> the proposal. Each red number on the left is a problem; the matching green number on the right is the fix.</p>
+    </div>
+    <span class="chip ill">Illustrative data</span>
+  </div>
+
+  <div class="cmp-wrap">
+
+    <!-- BEFORE -->
+    <section class="col before" aria-label="Today">
+      <div class="col-head"><span>Before &middot; Ziki today</span><span class="chip ill">reconstruction</span></div>
+      <div class="minibar">
+        <span class="chip-btn" style="cursor:default">&#128276; 23 unread</span>
+        <span class="chip-btn" style="cursor:default">Agents &#9662;</span>
+        <span class="chip-btn" style="cursor:default">Account &#9662;</span>
+        <span class="sp"></span>
+        <span><span class="mk p">1</span>Nothing in the top bar says something is waiting. &ldquo;Escalations&rdquo; is inside the Account menu.</span>
+      </div>
+      <div class="row bad"><span class="nm">Kite</span><span><span class="chip info">Waiting on you</span></span><span class="tx">Waiting for your answer <span class="mk p">4</span><span class="mk p">7</span><br>No question shown, no link, no deadline.</span></div>
+      <div class="row bad"><span class="nm">Harbor</span><span><span class="chip">Working</span></span><span class="tx">Working on #421 Password reset email&hellip; <span class="mk p">3</span><br>It is actually stuck waiting for an approval.</span></div>
+      <div class="row bad"><span class="nm">Ada&rsquo;s Claude</span><span><span class="chip">Working</span></span><span class="tx">Working on #412 Search results show sample data&hellip; <span class="mk p">2</span><br>A redesign proposal is waiting on you, and is not counted anywhere.</span></div>
+      <div class="row bad"><span class="nm">Lark</span><span><span class="chip">Offline</span></span><span class="tx">No recent activity <span class="mk p">5</span><br>No reason shown for why it stopped.</span></div>
+      <div class="row bad"><span class="nm">Orca</span><span><span class="chip">Idle</span></span><span class="tx">Standing by <span class="mk p">6</span><br>Looks the same as an agent that did nothing.</span></div>
+    </section>
+
+    <!-- AFTER -->
+    <section class="col after" aria-label="Proposed">
+      <div class="col-head"><span>After &middot; proposed</span><span class="chip ill">prototype</span></div>
+      <div class="minibar">
+        <span class="chip-btn needs-pill" style="cursor:default"><span class="dot"></span>Waiting on you &middot; 3 <span class="blk">2 blocking</span></span>
+        <span class="chip-btn" style="cursor:default">&#128276; 23</span>
+        <span class="sp"></span>
+        <span><span class="mk f">1</span>One count in the top bar: 2 block an agent, 1 does not.</span>
+      </div>
+      <div class="row good"><span class="nm">Kite</span><span><span class="chip att">Needs input</span></span><span class="tx"><span class="q">&ldquo;Should the search ignore trailing spaces everywhere?&rdquo;</span> <span class="mk f">4</span><br>[Answer: pick a suggested option or write your own] &middot; <b>3 h 19 min left</b> (illustrative) <span class="mk f">7</span></span></div>
+      <div class="row good"><span class="nm">Harbor</span><span><span class="chip att">Approval needed</span></span><span class="tx">Project rule: severity High, files in src/auth/**. <span class="mk f">3</span><br>[Review approval] &middot; blocking</span></div>
+      <div class="row good"><span class="nm">Ada&rsquo;s Claude</span><span><span class="chip info">Working</span></span><span class="tx">Working on #412. <b>Also:</b> redesign proposal waiting (not blocking). <span class="mk f">2</span><br>[Review proposal]</span></div>
+      <div class="row good"><span class="nm">Lark</span><span><span class="chip">Stopped</span></span><span class="tx">Released the issue after waiting 4 h 02 min for you. Not a failure. <span class="mk f">5</span><br>[See what it asked]</span></div>
+      <div class="row good"><span class="nm">Orca</span><span><span class="chip ok">Finished</span></span><span class="tx">Delivered a fix for #398 and linked the pull request, 2 h ago. <span class="mk f">6</span><br>[View pull request]</span></div>
+    </section>
+  </div>
+
+  <table class="map">
+    <thead><tr><th style="width:36px">#</th><th>Problem today</th><th>Evidence</th><th>What the proposal changes</th></tr></thead>
+    <tbody>
+      <tr><td><span class="mk p">1</span></td><td class="pb">Nothing in the top bar shows that you are needed. The Escalations link, and its badge, are inside the Account menu.</td><td>Live site, and the header code</td><td class="fx">An always-visible &ldquo;Waiting on you &middot; 3&rdquo; pill that splits blocking from not blocking.</td></tr>
+      <tr><td><span class="mk p">2</span></td><td class="pb">The pending count only includes agent questions. Redesign proposals and project-rule approvals are left out.</td><td>Ziki code</td><td class="fx">One count across questions, proposals and approvals.</td></tr>
+      <tr><td><span class="mk p">3</span></td><td class="pb">An agent stuck on an approval can read &ldquo;Working&rdquo;.</td><td>Ziki code (status rule counts questions only)</td><td class="fx">A separate &ldquo;Approval needed&rdquo; state with the rule that matched.</td></tr>
+      <tr><td><span class="mk p">4</span></td><td class="pb">A waiting agent shows no question and no link.</td><td>Ziki code</td><td class="fx">A short question preview and an Answer button on the row, with suggested answers (a proposed extension).</td></tr>
+      <tr><td><span class="mk p">5</span></td><td class="pb">A stopped agent shows &ldquo;Offline&rdquo; with no reason, and I found no notification that tells you.</td><td>Ziki code</td><td class="fx">A &ldquo;Stopped&rdquo; state that shows the recorded reason and what it means.</td></tr>
+      <tr><td><span class="mk p">6</span></td><td class="pb">A finished agent reads &ldquo;Idle · Standing by&rdquo;, the same as one that did nothing.</td><td>Ziki code, and my agent's empty audit log on the live site</td><td class="fx">A &ldquo;Finished&rdquo; state that says what was delivered and when.</td></tr>
+      <tr><td><span class="mk p">7</span></td><td class="pb">You can't see how long you have. After 30 min there is one reminder, and after a default 4 hours the agent releases the issue.</td><td>Ziki code</td><td class="fx">The time left, shown on the row (an illustrative, not live, countdown in this prototype).</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cta">
+    <a class="btn primary" href="dashboard.html">Try the interactive prototype</a>
+    <a class="btn" href="ziki-today.html">See today's Ziki in more detail</a>
+    <a class="btn" href="proposal.html">About this proposal</a>
+  </div>
+
+  <div class="mock-foot">
+    <span>Illustrative data only. The left side is a reconstruction, not a screenshot.</span>
+  </div>
+</main>
+</body>
+</html>

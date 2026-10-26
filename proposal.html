@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Attention and Activity · Proposal for Ziki</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="mock-banner"><strong>STATIC PROTOTYPE</strong> · Illustrative data only · Not connected to Ziki · Not deployed</div>
+
+<header class="appbar">
+  <div class="appbar-in">
+    <a class="logo" href="dashboard.html" aria-label="ziki (prototype home)"><i></i>ziki</a>
+    <span class="ws">Zedu</span>
+    <div class="spacer"></div>
+    <a class="chip-btn" href="dashboard.html" style="text-decoration:none">Open the prototype</a>
+    <a class="chip-btn" href="compare.html" style="text-decoration:none">Before and after</a>
+    <a class="chip-btn" href="ziki-today.html" style="text-decoration:none">Ziki today</a>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="prose">
+
+  <h1 style="font-size:30px;font-weight:800;margin-top:28px">Agent Attention and Activity</h1>
+  <p style="font-size:16px;color:var(--zk-text2);margin-top:6px">Making it obvious when your agents need you, and what to do about it.</p>
+  <p><b>Proposal by</b> Oluwaseyifunmi (Team Cybertron 2.0) &middot; Task 1: improving human&ndash;agent interaction.</p>
+  <p style="color:var(--zk-muted);font-size:13px"><b>How it was made:</b> the investigation of Ziki and this prototype were produced with Claude, an AI assistant, working from my proposal. Every name, number and time here is invented, unless a line is tagged as coming from Ziki&rsquo;s source code or the live site.</p>
+
+  <div class="panel" style="margin-top:20px">
+    <div class="lab" style="color:var(--zk-accent)">In one minute</div>
+    <ul style="margin:6px 0 0;padding-left:18px">
+      <li><b>Problem:</b> people who work with several agents have to keep checking Ziki to find out whether any agent is waiting for them.</li>
+      <li><b>Idea:</b> one always-visible &ldquo;Waiting on you&rdquo; count, and a status for each agent that says whether it is working, waiting on you, stopped, or finished, with the action you need right there.</li>
+      <li><b>Approach:</b> improve what Ziki already has (its Escalations page, approvals and agent status), rather than build a new system.</li>
+    </ul>
+    <div class="cta">
+      <a class="btn primary" href="dashboard.html">Open the interactive prototype</a>
+      <a class="btn" href="compare.html">See before and after</a>
+    </div>
+  </div>
+
+  <h2>1. The problem</h2>
+  <p>Picture someone who owns one or more agents on Ziki. An agent might ask a question, need approval before a merge, hit a problem, or finish its work. Each of those needs a different response, and each shows up in a different place: the bell, the Escalations page, the issue itself, an email.</p>
+  <p>The result is that the person checks several places, repeatedly, to learn whether anything needs them. The aim here is simple: <b>they should be able to tell at a glance when they are needed, understand why, and respond without hunting.</b></p>
+
+  <h2>2. What Ziki already does well</h2>
+  <p>Everything below was checked in Ziki&rsquo;s source code (<span class="tag v">Code</span>) or on the live site while signed in (<span class="tag v">Live</span>).</p>
+  <ul>
+    <li>A dashboard &ldquo;Your agents&rdquo; table with the statuses Working, Waiting on you, Idle and Offline, refreshed every 30 seconds. <span class="tag v">Live</span></li>
+    <li>An Escalations page with question, work authorization, blocker, scope change, human approval and redesign types, status filters and a one-click &ldquo;Approve &amp; Unblock&rdquo;. <span class="tag v">Code</span> <span class="tag v">Live</span></li>
+    <li>Notifications and email for an agent&rsquo;s question, plus a reminder after 30 minutes. <span class="tag v">Code</span></li>
+    <li>An approval banner with Approve and Reject on the issue page, and an audit log with undo. <span class="tag v">Code</span></li>
+  </ul>
+
+  <h2>3. Where people get stuck</h2>
+  <ul>
+    <li><b>The count leaves things out.</b> The pending count and the &ldquo;Waiting on you&rdquo; status include only agent questions, not redesign proposals or project-rule approvals. An agent stuck on an approval can still read &ldquo;Working&rdquo;. <span class="tag v">Code</span></li>
+    <li><b>The indicator is hidden.</b> The Escalations link and its badge sit inside the account menu, not in the top bar. <span class="tag v">Live</span></li>
+    <li><b>A waiting row can&rsquo;t be acted on.</b> It shows no preview of the question and no link. <span class="tag v">Code</span></li>
+    <li><b>Requests are buried.</b> The bell had 23 to 25 unread items, nearly all &ldquo;commented on&rdquo; lines, with no filter. <span class="tag v">Live</span></li>
+    <li><b>Stopped and finished agents are indistinguishable.</b> Both read &ldquo;Offline&rdquo; or &ldquo;Idle&rdquo;. Ziki records why a claim was released, but the dashboard doesn&rsquo;t show it, and I found no notification that tells the owner. <span class="tag v">Code</span></li>
+    <li><b>The deadline is invisible.</b> After one reminder at 30 minutes, an unanswered question leads to the agent releasing the issue after a default 4-hour wait. <span class="tag v">Code</span></li>
+    <li><b>Rejecting an approval tells the agent nothing.</b> Ziki records the decision, but sends the agent no message; the agent only finds out the next time it tries to merge, when it is told &ldquo;Human approval was rejected&rdquo;. Approving, by contrast, resumes the merge automatically. <span class="tag v">Code</span></li>
+    <li><b>Only workspace owners and admins can decide an approval.</b> The owner of the agent that is waiting may not be one. <span class="tag v">Code</span></li>
+    <li><b>Only questions have a time limit.</b> Approvals and redesign proposals never expire, so a countdown only makes sense for questions. <span class="tag v">Code</span></li>
+    <li><b>Questions and answers are plain text.</b> An agent&rsquo;s question and your answer are both free text (up to 2,000 characters); there is no way for an agent to offer choices. <span class="tag v">Code</span></li>
+    <li><b>Finished work is hard to find.</b> It is mainly visible in the audit log, which showed &ldquo;No agent activity yet&rdquo; for my own agent on the live site. <span class="tag v">Live</span></li>
+  </ul>
+
+  <h2>4. What I propose</h2>
+  <ol>
+    <li><b>A &ldquo;Waiting on you&rdquo; count in the top bar.</b> One number covering questions, redesign proposals and project-rule approvals, split into what is <i>blocking an agent</i> and what is <i>not</i>.</li>
+    <li><b>Five clearly different agent states.</b> Working, Needs input, Approval needed, Stopped and Finished, each with the relevant issue and a plain explanation.</li>
+    <li><b>The action beside the information.</b> A question preview with an Answer button; an approval with the rule that triggered it and Approve or Reject; a stopped agent with its recorded reason; a finished agent with what it delivered and when.</li>
+    <li><b>A visible waiting deadline</b> for questions, so the cost of waiting is clear. Approvals and proposals have no time limit, so they show none. In the prototype the countdown is a fixed example, not a live timer.</li>
+    <li><b>Answers that go both ways (a proposed extension).</b> The agent offers two or three suggested answers, each with its reason and a recommendation. You pick one or write your own, and can tick &ldquo;Remember this choice&rdquo;. Afterwards the agent says what it understood, and you can reply &ldquo;Not what I meant&rdquo;.</li>
+  </ol>
+  <p>Two rules guide the wording: <b>idle is never shown as finished</b>, and <b>stopped is never assumed to be a failure</b>.</p>
+
+  <h2>5. Walking through the prototype</h2>
+  <ol>
+    <li>Open <a href="dashboard.html">the prototype</a>. The top bar says &ldquo;Waiting on you &middot; 3&rdquo; with &ldquo;2 blocking&rdquo;.</li>
+    <li>Click the pill to see the three items in two groups: two that block an agent and one that does not.</li>
+    <li>Press <b>Answer</b> on Kite&rsquo;s question. Pick a suggested answer (the recommended one comes with its reason) or write your own, optionally tick &ldquo;Remember this choice&rdquo;, and send. The count drops to 2, and Kite shows what it understood. Press <b>Not what I meant</b> to reopen it.</li>
+    <li>Open <b>Review approval</b> for Harbor. Read why it&rsquo;s needed, then choose Approve or Reject. A rejected Harbor shows &ldquo;Rejected by you&rdquo;, explains that Ziki sends the agent no message about a rejection, and is never shown as Finished.</li>
+    <li>Review the redesign proposal. Approving or declining it does not unblock any agent, because it never blocked one.</li>
+    <li>Read the Stopped (Lark) and Finished (Orca) cards, and press <b>See what it asked</b> on Lark.</li>
+    <li>Press <b>Reset demo</b> to start again.</li>
+  </ol>
+
+  <h2>6. Answering one question: today and proposed</h2>
+  <p>The <a href="compare.html">side-by-side page</a> shows all five agents both ways. In short, for a single question:</p>
+  <div class="two">
+    <div class="panel before">
+      <div class="lab">Today</div>
+      <ol class="steps">
+        <li>Notice something (bell, email or the 30-minute reminder), or remember to look.</li>
+        <li>Open the account menu.</li>
+        <li>Click Escalations.</li>
+        <li>Find the right item in the list.</li>
+        <li>Open it, then type and send the answer.</li>
+      </ol>
+      <p style="margin-top:8px">About <b>5 steps</b> across a menu and two pages. An approval or a proposal follows a different path.</p>
+    </div>
+    <div class="panel after">
+      <div class="lab">Proposed</div>
+      <ol class="steps">
+        <li>See &ldquo;Waiting on you &middot; 3&rdquo; in the top bar.</li>
+        <li>Click it, then click Answer.</li>
+        <li>Type and send.</li>
+      </ol>
+      <p style="margin-top:8px">About <b>3 steps</b>, from any page, and the same pattern for questions, approvals and proposals. These counts are illustrative.</p>
+    </div>
+  </div>
+
+  <h2>7. What it builds on</h2>
+  <p>Nothing here needs a new system. Each part reuses something Ziki already has:</p>
+  <table class="cmp">
+    <thead><tr><th>Need</th><th>Existing Ziki piece</th></tr></thead>
+    <tbody>
+      <tr><td>The list of things that need a person</td><td>The Escalations page and its pending count (<code>countPendingEscalations</code>), extended to include proposals and approvals</td></tr>
+      <tr><td>Agent status on the dashboard</td><td><code>classifyAgentStatus</code> and <code>loadOwnAgents</code> in <code>lib/dashboard-overview.ts</code>, and its 30-second refresh</td></tr>
+      <tr><td>Approve or reject</td><td>The issue approval banner and <code>/api/v1/approvals/[id]/decision</code> (only workspace owners and admins can decide)</td></tr>
+      <tr><td>Answering a question</td><td>The Escalations answer form (<code>escalation-controls.tsx</code>), and Ziki&rsquo;s delivery of an answer to the agent&rsquo;s inbox</td></tr>
+      <tr><td>Redesign proposals</td><td>The existing redesign proposals and their decision route</td></tr>
+      <tr><td>Why an agent stopped</td><td>The recorded claim-release reasons (silence, deadline, owner unresponsive)</td></tr>
+      <tr><td>Contacting an agent</td><td>Each agent&rsquo;s existing &ldquo;Messages and instructions&rdquo; page</td></tr>
+    </tbody>
+  </table>
+
+  <h2>8. Boundaries</h2>
+  <ul>
+    <li>This is <b>not a monitoring dashboard</b>. It only covers what an agent needs from a person, and what happened to the agent.</li>
+    <li>It is <b>not a new request system</b>. The Escalations page and its data stay the source of truth.</li>
+    <li>It does <b>not redesign Ziki</b>. Colours, type and layout follow Ziki&rsquo;s existing style.</li>
+    <li>It covers the <b>hand-off moments</b> between an agent and a person: a request, a reply, an approval, an outcome. The answer panel adds a first step towards two-way interaction (suggested answers, &ldquo;remember this&rdquo;, and &ldquo;not what I meant&rdquo;). Longer conversations and an agent learning from your decisions are <b>not covered</b>.</li>
+  </ul>
+
+  <div class="mock-foot">
+    <span>Static prototype &middot; illustrative data only.</span>
+    <a href="dashboard.html">Open the prototype</a>
+    <a href="compare.html">Before and after</a>
+    <a href="ziki-today.html">Ziki today</a>
+  </div>
+
+</div>
+</main>
+</body>
+</html>

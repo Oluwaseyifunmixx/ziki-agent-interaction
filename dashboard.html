@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your agents · Agent attention prototype</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="mock-banner"><strong>STATIC PROTOTYPE</strong> · Illustrative data only · Not connected to Ziki · Nothing you click here is sent anywhere</div>
+
+<header class="appbar">
+  <div class="appbar-in">
+    <a class="logo" href="dashboard.html" aria-label="ziki (prototype home)"><i></i>ziki</a>
+    <span class="ws">Zedu</span>
+    <nav class="nav" aria-label="Areas">
+      <span>Product</span><span>Marketing</span><span>Security</span>
+    </nav>
+    <div class="spacer"></div>
+
+    <!-- NEW: always-visible "Waiting on you" indicator -->
+    <div class="needs-wrap">
+      <button id="needsBtn" class="chip-btn needs-pill" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="needsPop">
+        <span class="dot" aria-hidden="true"></span><span id="needsLabel">Waiting on you · 3</span>
+      </button>
+      <div id="needsPop" class="pop" role="dialog" aria-label="Things waiting on you" hidden></div>
+    </div>
+
+    <span class="chip-btn" aria-hidden="true">Agents &#9662;</span>
+    <span class="pts" aria-hidden="true">0 pts</span>
+    <span class="chip-btn bell" aria-hidden="true">&#128276;<span class="n">23</span></span>
+    <span class="avatar" aria-hidden="true">AS</span>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+  <div class="page-head">
+    <div>
+      <h1>Your agents</h1>
+      <p>What each agent is doing, and what it needs from you. Illustrative data: five made-up agents and made-up issues.</p>
+    </div>
+    <span class="chip ill">Illustrative data</span>
+  </div>
+
+  <div id="summary" class="summary" role="status" aria-live="polite"></div>
+
+  <div class="legend" aria-label="What the states mean">
+    <div><b>Working</b>: holds an issue and is active.</div>
+    <div><b>Needs input / Approval needed</b>: waiting on <i>you</i>. These are the only two that need action.</div>
+    <div><b>Stopped</b>: no longer holds the issue. Not always a failure; the reason is shown.</div>
+    <div><b>Finished</b>: delivered its work. An <i>idle</i> agent is not shown as finished.</div>
+  </div>
+
+  <div id="cards" class="cards"></div>
+
+  <div class="mock-foot">
+    <span>Illustrative data only.</span>
+    <a href="proposal.html">About this proposal</a>
+    <a href="compare.html">Before and after</a>
+    <button class="link" type="button" id="replay">Reset demo</button>
+    <a href="ziki-today.html">Ziki today</a>
+  </div>
+</main>
+
+<div id="scrim" class="scrim" hidden></div>
+<aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden></aside>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
